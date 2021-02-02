@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using static ExtractAndOverrideTest.OrderService;
 
 namespace ExtractAndOverrideTest
@@ -24,7 +25,23 @@ namespace ExtractAndOverrideTest
                 new Order{ Type="Book", Price = 300, ProductName = "POP book"},
             };
             target.SetOrders(orders);
-            target.GetTopBooksByOrders();
+            var count =target.GetTopBooksByOrders().Count();
+            Assert.AreEqual(2, count);
         }
+
+
+        //[Test]
+        //public void Test_SyncBookOrders_1_Orders_NullData()
+        //{
+        //    var target = new StubOrderService();
+
+        //    var orders = new List<Order>
+        //    {
+        //        new Order{ Type="CD", Price = 200, ProductName = "91's CD"}
+        //    };
+        //    target.SetOrders(orders);
+        //    var count = target.GetTopBooksByOrders().Count();
+        //    Assert.AreEqual(0, count);
+        //}
     }
 }
