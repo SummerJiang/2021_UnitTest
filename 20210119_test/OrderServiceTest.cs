@@ -30,18 +30,33 @@ namespace ExtractAndOverrideTest
         }
 
 
-        //[Test]
-        //public void Test_SyncBookOrders_1_Orders_NullData()
-        //{
-        //    var target = new StubOrderService();
+        [Test]
+        public void Test_SyncBookOrders_1_Orders_0Data()
+        {
+            var target = new StubOrderService();
 
-        //    var orders = new List<Order>
-        //    {
-        //        new Order{ Type="CD", Price = 200, ProductName = "91's CD"}
-        //    };
-        //    target.SetOrders(orders);
-        //    var count = target.GetTopBooksByOrders().Count();
-        //    Assert.AreEqual(0, count);
-        //}
+            var orders = new List<Order>
+            {
+                new Order{ Type="CD", Price = 200, ProductName = "91's CD"}
+            };
+            target.SetOrders(orders);
+            var count = target.GetTopBooksByOrders().Count();
+            Assert.AreEqual(0, count);
+        }
+
+        [Test]
+        public void Test_SyncBookOrders_2_Orders_1Data()
+        {
+            var target = new StubOrderService();
+
+            var orders = new List<Order>
+            {
+                new Order{ Type="CD", Price = 200, ProductName = "91's CD"},
+                new Order{ Type="Book", Price = 300, ProductName = "POP book"},
+            };
+            target.SetOrders(orders);
+            var count = target.GetTopBooksByOrders().Count();
+            Assert.AreEqual(1, count);
+        }
     }
 }
