@@ -7,11 +7,11 @@ namespace ExtractAndOverrideTest
 {
     public partial class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
+        //[SetUp]
+        //public void Setup()
+        //{
            
-        }
+        //}
 
         [Test]
         public void Test_SyncBookOrders_3_Orders_Only_2_book_order()
