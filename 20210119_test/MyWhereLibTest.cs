@@ -66,6 +66,23 @@ namespace MyWhereTest
             Assert.AreEqual(expected, people.HiSelect(person => person));
         }
 
+        [Test]
+        public void Select_Age()
+        {
+            var people = new List<Person>
+            {
+                new Person {Name = "James", Age = 17},
+                new Person {Name = "CC", Age = 19},
+                new Person {Name = "Frank", Age = 20}
+            };
+            var expected = new List<Person>
+            {
+                new Person {Age = 17},
+                new Person {Age = 19},
+                new Person {Age = 20}
+            };
+            Assert.AreEqual(expected, people.HiSelect(person => new Person { Age = person.Age }));
+        }
 
         [Test]
         public void Select_Name()
