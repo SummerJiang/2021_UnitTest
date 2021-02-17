@@ -49,7 +49,7 @@ namespace MyWhereTest
         }
 
         [Test]
-        public void Select_Adult()
+        public void Select_Output_Same()
         {
             var people = new List<Person>
             {
