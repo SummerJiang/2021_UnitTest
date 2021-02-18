@@ -110,6 +110,33 @@ namespace MyWhereTest
             Assert.AreEqual(expected, numbers.HiSelect(number => number * number));
         }
 
+
+        [Test]
+        public void Select_NameList()
+        {
+            var people = new List<Person>
+            {
+                new Person {Name = "James", Age = 17},
+                new Person {Name = "CC", Age = 19},
+                new Person {Name = "Frank", Age = 20}
+            };
+            string[] expected = {"James","CC","Frank" };
+            Assert.AreEqual(expected, people.HiSelect(person => person.Name));
+        }
+
+        [Test]
+        public void Select_AgeList()
+        {
+            var people = new List<Person>
+            {
+                new Person {Name = "James", Age = 17},
+                new Person {Name = "CC", Age = 19},
+                new Person {Name = "Frank", Age = 20}
+            };
+            int[] expected = { 17, 19, 20 }; 
+            Assert.AreEqual(expected, people.HiSelect(person =>person.Age));
+        }
+
     }
 
     public struct Person
@@ -130,7 +157,7 @@ namespace MyWhereTest
 
     public static class MySelect
     {
-        public static IEnumerable<T> HiSelect<T>(this IEnumerable<T> source, Func<T, T> selector)
+        public static IEnumerable<TResult> HiSelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             foreach (var s in source)
                     yield return selector(s);
