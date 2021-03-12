@@ -26,7 +26,6 @@ namespace HW_0308_Test
                 new Order {Cost = 109, Price = 730},
             };
             int[] expected = { 700, 1220, 1390 };//4筆
-           
             Assert.AreEqual(expected, orders.HiSelect(order => order.Price ,4));
         }
 
@@ -47,19 +46,17 @@ namespace HW_0308_Test
                 new Order {Cost = 109, Price = 730},
             };
             int[] expected = {63,162,261,109 };//3筆
-
             Assert.AreEqual(expected, orders.HiSelect(order => order.Cost, 3));
         }
-
 
         [Test]
         public void InuputWrongCount_OutputErrorMSG()
         {
-            IList<int> Sumlist = new List<int>();
+            var orders = new List<Order>();
 
-           
-            
+            Assert.Throws<ArgumentException>(() => orders.HiSelect(order => order.Cost, 3));
         }
+       
     }
 
     public struct Order
@@ -73,8 +70,8 @@ namespace HW_0308_Test
         //number為幾個為一組
         public static IEnumerable HiSelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector,int number)
         {
-            IList<int> Sumlist = new List<int>();
-            IList<int> Olist = new List<int>();
+            IList<int> Sumlist = new List<int>();//總數清單
+            IList<int> Olist = new List<int>();  //原始資料清單
 
             foreach (var s in source)
             {
@@ -95,6 +92,8 @@ namespace HW_0308_Test
                     Sumlist.Add(sum);
                 }
             }
+            else
+                throw new ArgumentException("資料筆數為0", "專案HW_0308");
 
             return Sumlist;
 
