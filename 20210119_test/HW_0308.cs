@@ -25,8 +25,8 @@ namespace HW_0308_Test
                 new Order {Cost = 98, Price = 660},
                 new Order {Cost = 109, Price = 730},
             };
-            int[] expected = { 700, 1220, 1390 };//4筆
-            Assert.AreEqual(expected, orders.HiSelect(order => order.Price ,4));
+            int[] expected = { 700, 1220, 1390 };//4個群組
+            Assert.AreEqual(expected, orders.GroupSum(order => order.Price ,4));
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace HW_0308_Test
                 new Order {Cost = 98, Price = 660},
                 new Order {Cost = 109, Price = 730},
             };
-            int[] expected = {63,162,261,109 };//3筆
-            Assert.AreEqual(expected, orders.HiSelect(order => order.Cost, 3));
+            int[] expected = {63,162,261,109 };//3個群組
+            Assert.AreEqual(expected, orders.GroupSum(order => order.Cost, 3));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace HW_0308_Test
         {
             var orders = new List<Order>();
 
-            Assert.Throws<ArgumentException>(() => orders.HiSelect(order => order.Cost, 3));
+            Assert.Throws<ArgumentException>(() => orders.GroupSum(order => order.Cost, 3));
         }
        
     }
@@ -68,34 +68,37 @@ namespace HW_0308_Test
     public static class MySelect
     {
         //number為幾個為一組
-        public static IEnumerable HiSelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector,int number)
+        public static IEnumerable GroupSum<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector,int number) 
         {
-            IList<int> Sumlist = new List<int>();//總數清單
-            IList<int> Olist = new List<int>();  //原始資料清單
+            IList<int> sumlist = new List<int>();//總數清單
+            IList<int> olist = new List<int>();  //原始資料清單
 
             foreach (var s in source)
             {
-                Olist.Add(selector(s).GetHashCode());
+                olist.Add(selector(s).GetHashCode());
             }
 
-            if (Olist.Count > 0)
+            if (olist.Count > 0)
             {
-                for (int data = 0; data < Olist.Count; data++) //來源資料筆數
+                //來源資料筆數
+                for (int data = 0; data < olist.Count; data++) 
                 {
                     int sum = 0;
-                    for (int i = 0; i < number && data < Olist.Count; i++) //分群數量
+                    //分群數量
+                    for (int i = 0; i < number && data < olist.Count; i++) 
                     {
-                        sum = sum + Olist[data];
+                        sum = sum + olist[data];
                         data++;
                     }
-                    data--; //資料會多加一筆需扣回，才能計算正確
-                    Sumlist.Add(sum);
+                    //來源資料會多加一筆需扣回，才能計算正確
+                    data--; 
+                    sumlist.Add(sum);
                 }
             }
             else
                 throw new ArgumentException("資料筆數為0", "專案HW_0308");
 
-            return Sumlist;
+            return sumlist;
 
         }
     }
